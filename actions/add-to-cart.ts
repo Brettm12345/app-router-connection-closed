@@ -9,7 +9,7 @@ const safeAction = createSafeActionClient()
 
 const input = z.object({
   beer: z.object({
-    id: z.string(),
+    id: z.number(),
     name: z.string(),
     style: z.string(),
     hop: z.string(),
