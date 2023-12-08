@@ -37,7 +37,6 @@ export function BeerCard({beer}: {beer: Beer}) {
         disabled={status === 'executing'}
         onClick={() => {
           execute({beer: {...beer, quantity: 1}})
-          router.refresh()
         }}
       >
         Add to Cart
