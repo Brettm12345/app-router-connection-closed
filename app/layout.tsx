@@ -1,16 +1,6 @@
 import {Cart} from '@/actions/add-to-cart'
-import {CartItem} from '@/components/cart-item'
-import {Button} from '@/components/ui/button'
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet'
+import {CartSheet} from '@/components/cart-sheet'
 import {kv} from '@vercel/kv'
-import {ShoppingBag} from 'lucide-react'
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import {cookies} from 'next/headers'
@@ -33,29 +23,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="flex justify-between items-center p-4 h-16 border-b border-border">
+        <header className="flex justify-between items-center p-4 h-16 border-b border-border sticky top-0">
           <h1 className="text-2xl font-bold">Beer Store</h1>
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button size="icon" className="relative" variant="outline">
-                <ShoppingBag />
-                <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-lg p-1.5">
-                  {cart.beers.length}
-                </div>
-              </Button>
-            </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle>Cart</SheetTitle>
-                <SheetDescription>Shopping Cart</SheetDescription>
-              </SheetHeader>
-              <ul>
-                {cart.beers.map(beer => (
-                  <CartItem key={beer.id} beer={beer} />
-                ))}
-              </ul>
-            </SheetContent>
-          </Sheet>
+          <CartSheet cart={cart} />
         </header>
         {children}
       </body>
