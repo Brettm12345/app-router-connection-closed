@@ -4,7 +4,7 @@ import {kv} from '@vercel/kv'
 import {cookies} from 'next/headers'
 import {Cart} from './add-to-cart'
 
-export async function removeFromCart(itemId: string) {
+export async function removeFromCart(itemId: number) {
   try {
     // Retrieve the current cart from KV
     const cartId = cookies().get('cartId')?.value
