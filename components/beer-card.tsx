@@ -4,7 +4,7 @@ import {useAction} from 'next-safe-action/hook'
 import {useRouter} from 'next/navigation'
 
 export interface Beer {
-  id: string
+  id: number
   name: string
   style: string
   hop: string
