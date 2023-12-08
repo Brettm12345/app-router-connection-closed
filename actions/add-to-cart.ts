@@ -1,8 +1,25 @@
 'use server'
 import {Beer} from '@/app/page'
 import {kv} from '@vercel/kv'
+import {createSafeActionClient} from 'next-safe-action'
 import {cookies} from 'next/headers'
+import {z} from 'zod'
 
+const safeAction = createSafeActionClient()
+
+const input = z.object({
+  beer: z.object({
+    id: z.string(),
+    name: z.string(),
+    style: z.string(),
+    hop: z.string(),
+    malts: z.string(),
+    ibu: z.string(),
+    alcohol: z.string(),
+    blg: z.string(),
+    quantity: z.number(),
+  }),
+})
 interface CartBeer extends Beer {
   quantity: number
 }
@@ -10,7 +27,7 @@ export interface Cart {
   beers: CartBeer[]
 }
 
-export async function addToCart(beer: Beer): Promise<void> {
+export const addToCart = safeAction(input, async ({beer}) => {
   try {
     // Retrieve the current cart from KV
     const cartId = cookies().get('cartId')?.value
@@ -38,4 +55,5 @@ export async function addToCart(beer: Beer): Promise<void> {
     console.error('Error adding item to cart:', error)
     throw error
   }
-}
+  return {success: true}
+})

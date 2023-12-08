@@ -1,7 +1,7 @@
 'use client'
 import {addToCart} from '@/actions/add-to-cart'
+import {useAction} from 'next-safe-action/hook'
 import {useRouter} from 'next/navigation'
-import {useTransition} from 'react'
 
 export interface Beer {
   id: string
@@ -12,12 +12,14 @@ export interface Beer {
   ibu: string
   alcohol: string
   blg: string
-  description: string
-  image: string
 }
 export function BeerCard({beer}: {beer: Beer}) {
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
+  const {status, execute} = useAction(addToCart, {
+    onSuccess: () => {
+      router.refresh()
+    },
+  })
   return (
     <div
       key={beer.id}
@@ -30,12 +32,11 @@ export function BeerCard({beer}: {beer: Beer}) {
       <p className="text-sm">{beer.ibu}</p>
       <p className="text-sm">{beer.alcohol}</p>
       <p className="text-sm">{beer.blg}</p>
-      <p className="text-sm">{beer.description}</p>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        disabled={isPending}
+        disabled={status === 'executing'}
         onClick={() => {
-          startTransition(() => addToCart(beer))
+          execute({beer: {...beer, quantity: 1}})
           router.refresh()
         }}
       >

@@ -9,8 +9,6 @@ export interface Beer {
   ibu: string
   alcohol: string
   blg: string
-  description: string
-  image: string
 }
 export default async function Home() {
   const response = await fetch(
