@@ -1,5 +1,5 @@
 import {BeerCard} from '@/components/beer-card'
-
+export const runtime = 'edge'
 export interface Beer {
   id: string
   name: string
