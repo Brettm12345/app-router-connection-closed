@@ -23,7 +23,7 @@ export async function addToCart(beer: Beer): Promise<void> {
               b.id === beer.id ? {...b, quantity: b.quantity + 1} : b
             ),
           }
-        : {beers: [...cart!.beers, {...beer, quantity: 1}]}
+        : {beers: [...(cart?.beers ?? []), {...beer, quantity: 1}]}
       kv.set(cartId, JSON.stringify(newCart))
     } else {
       const newCart: Cart = {beers: [{...beer, quantity: 1}]}

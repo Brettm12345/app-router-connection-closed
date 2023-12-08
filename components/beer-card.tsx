@@ -1,5 +1,7 @@
+'use client'
 import {addToCart} from '@/actions/add-to-cart'
 import {useRouter} from 'next/navigation'
+import {useTransition} from 'react'
 
 export interface Beer {
   id: string
@@ -15,6 +17,7 @@ export interface Beer {
 }
 export function BeerCard({beer}: {beer: Beer}) {
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
   return (
     <div
       key={beer.id}
@@ -30,8 +33,9 @@ export function BeerCard({beer}: {beer: Beer}) {
       <p className="text-sm">{beer.description}</p>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        disabled={isPending}
         onClick={() => {
-          addToCart(beer)
+          startTransition(() => addToCart(beer))
           router.refresh()
         }}
       >

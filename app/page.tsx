@@ -1,5 +1,4 @@
 import {BeerCard} from '@/components/beer-card'
-import {useRouter} from 'next/navigation'
 
 export interface Beer {
   id: string
@@ -15,10 +14,9 @@ export interface Beer {
 }
 export default async function Home() {
   const response = await fetch(
-    'https://random-data-api.com/api/v2/beers?size=200'
+    'https://random-data-api.com/api/v2/beers?size=100'
   )
   const beers: Beer[] = await response.json()
-  const router = useRouter()
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1 className="text-5xl font-bold">Welcome to the Beer Store!</h1>

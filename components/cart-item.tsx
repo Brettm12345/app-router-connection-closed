@@ -1,3 +1,4 @@
+'use client'
 import {removeFromCart} from '@/actions/remove-from-cart'
 import {Beer} from './beer-card'
 import {Button} from './ui/button'
