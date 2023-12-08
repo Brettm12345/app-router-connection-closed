@@ -16,7 +16,6 @@ export function CartItem({beer}: {beer: Beer}) {
       <p className="text-sm">{beer.ibu}</p>
       <p className="text-sm">{beer.alcohol}</p>
       <p className="text-sm">{beer.blg}</p>
-      <p className="text-sm">{beer.description}</p>
       <Button
         onClick={() => {
           removeFromCart(beer.id)
