@@ -1,7 +1,6 @@
 'use server'
 import {Beer} from '@/app/page'
 import {kv} from '@vercel/kv'
-import {randomUUID} from 'crypto'
 import {cookies} from 'next/headers'
 
 interface CartBeer extends Beer {
@@ -27,7 +26,7 @@ export async function addToCart(beer: Beer): Promise<void> {
       kv.set(cartId, JSON.stringify(newCart))
     } else {
       const newCart: Cart = {beers: [{...beer, quantity: 1}]}
-      const cartId = randomUUID()
+      const cartId = Math.random().toString(36).substring(2, 15)
       await kv.set(cartId, JSON.stringify(newCart))
       cookies().set('cartId', cartId)
     }
